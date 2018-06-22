@@ -385,7 +385,8 @@ nregn_low = 6750
 nregn_hi = 6900
 
 # Path for DRP and DAP data
-path = '/usr/data/dizzy2/mab/manga/mpl6_data/'
+#path = '/usr/data/dizzy2/mab/manga/mpl6_data/'
+path = '/Users/machuca/Wisconsin/Manga/testing_data/'
 
 # Debug mode for when the produced stacks are less than ideal. Plots
 # a spectrum of the stack after each new galaxy. 
@@ -450,7 +451,8 @@ if (incli == 'y'):
     petro_ba = drp[1].data['nsa_elpetro_ba']
 drp.close()
 
-# Print prediction of run time. 
+# Print prediction of run time.
+tar_idx = np.array(tar_idx,dtype=np.int)
 tpredict = estimate(tar_idx)
 print('Predicted run time: approx. '+np.str(tpredict)+' minutes.')
 
@@ -493,7 +495,9 @@ for g in tar_idx:
             np.str(np.int(cur_time - start_time))+' seconds.')
     # Loading .fits files. summa will move on to the next galaxy if there
     # are problems with the quality bitmasks.
-    drp_gal = glob.glob(path+'drp/'+np.str(plate[g])+'/stack/manga-'+
+    #drp_gal = glob.glob(path+'drp/'+np.str(plate[g])+'/stack/manga-'+
+    #    np.str(plate[g])+'-'+ifudsgn[g]+'-LOGCUBE.fit*')
+    drp_gal = glob.glob(path+'/manga-'+
         np.str(plate[g])+'-'+ifudsgn[g]+'-LOGCUBE.fit*')
     if len(drp_gal) == 0:
         print('DRP for '+np.str(plate[g])+'-'+ifudsgn[g]+' is missing.')
@@ -509,8 +513,10 @@ for g in tar_idx:
             n += 1
             prob_gal = np.concatenate((prob_gal,[g]))
         continue 
-    dap_gal = glob.glob(path+'dap/SPX-GAU-MILESHC/'+np.str(plate[g])+'/'+
-        ifudsgn[g]+'/manga-'+np.str(plate[g])+'-'+ifudsgn[g]+
+    #dap_gal = glob.glob(path+'dap/SPX-GAU-MILESHC/'+np.str(plate[g])+'/'+
+    #    ifudsgn[g]+'/manga-'+np.str(plate[g])+'-'+ifudsgn[g]+
+    #    '-MAPS-SPX-GAU-MILESHC.fit*')
+    dap_gal = glob.glob(path+'manga-'+np.str(plate[g])+'-'+ifudsgn[g]+
         '-MAPS-SPX-GAU-MILESHC.fit*')
     if len(dap_gal) == 0:
         print('DAP for '+np.str(plate[g])+'-'+ifudsgn[g]+' is missing.')
@@ -755,8 +761,11 @@ if verbose == 'y':
     print('')
     print('Stack Overview:')
     print(np.str(n)+' total galaxies. '+np.str(prob_gal.shape[0])+' skipped.')
-    print('Stacking region '+np.str(bin_num)+': '+np.str([usr_rgn[bin_num,0],
-        usr_rgn[bin_num,1],usr_rgn[bin_num,2],usr_rgn[bin_num,3]]))
+    if gal_list_tog == 'y':
+        print('Stacking region '+np.str(bin_num)+': '+np.str([usr_rgn[bin_num,0],
+            usr_rgn[bin_num,1],usr_rgn[bin_num,2],usr_rgn[bin_num,3]]))
+    else:
+        print('Stacking region: '+rgn_name)
     print('SNR cut-off: '+np.str(nspec['sncut']))
     if 'r_borders' in list(nspec.keys()):
         print('Radial bin edges:')
