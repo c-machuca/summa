@@ -1,0 +1,14 @@
+y                       # Verbose toggle. Print progress?
+wmn                     # Type of average?
+3                       # Signal-to-noise cutoff? Minimum of 3. 
+y                       # Discard AGN candidates?
+stellar                 # Use stellar or gas velocities?
+y,r                     # Two togs. Slice by half-light radius? Re or arcsecs?
+0,.5,1,10               # If 'y' above, borders of desired radius regions.
+y                       # Slice by galaxy b/a?
+0,.33,.66,1             # If 'y' above, borders of desired b/a regions. 
+n                       # Subpixel? If y, give an integer for how much.
+n                       # Produce 2D histograms? If y give desired wave range.
+8548-12703              # Region name?
+n,6                     # Use pre-discriminated ranges for galaxy list making?
+galaxy_list.txt         # If 'n' above, give list of galaxies to be stacked.
